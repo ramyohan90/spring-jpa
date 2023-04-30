@@ -1,5 +1,7 @@
 package com.org.app.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,7 +12,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity(name = "address")
-public class Address extends BaseEntity{
+public class Address{
 	@Id
 	@Column(name = "addressid")
 	@SequenceGenerator(name="address_sequence_id", sequenceName = "address_sequence_id", allocationSize = 1)
@@ -34,11 +36,33 @@ public class Address extends BaseEntity{
 	
 	@Column(name = "delivery_address_zip")
 	private String delivery_address_zip;
+	
+	@Column(name = "createdate", nullable = false)
+	private LocalDateTime createDate;
+	
+	@Column(name = "updatedate")
+	private LocalDateTime updateDate;
 
 //	@OneToOne
 //	@JoinColumn(referencedColumnName= "customerid", table = "customer")
 //	private long customerid;
 	
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(LocalDateTime updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "address")
 	private Customer customer;
 	

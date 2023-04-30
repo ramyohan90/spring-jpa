@@ -17,8 +17,9 @@ public class CreateCustomerImpl implements CreateCustomerService{
 
 	@Override
 	public Customer createCustomer1(Customer c) {
-		// TODO Auto-generated method stub
+		// Utilize BaseEntity inheritance in future.
 		c.setCreateDate(LocalDateTime.now());
+		c.getAddress().setCreateDate(LocalDateTime.now());
 		Customer result = this.customerDao.save(c);
 		if (result == null) {
 			return null;

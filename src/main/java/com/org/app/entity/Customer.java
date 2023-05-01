@@ -1,24 +1,24 @@
 package com.org.app.entity;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity(name = "customer")
-public class Customer{
+@Table(name = "customer")
+public class Customer extends BaseEntity{
 	@Id
 	@Column(name = "customerid")
 	@SequenceGenerator(name="customer_sequence_id", sequenceName = "customer_sequence_id", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_sequence_id")
-	private long customerid;
+	private int customerid;
 	
 	@Column(name = "firstname")
 	private String firstName;
@@ -29,14 +29,8 @@ public class Customer{
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "createdate", nullable = false)
-	private LocalDateTime createDate;
-	
-	@Column(name = "updatedate")
-	private LocalDateTime updateDate;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customerid", referencedColumnName = "customerid", insertable = true)
+	@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private Address address;
 	
 	public long getCustomerid() {
@@ -45,22 +39,6 @@ public class Customer{
 
 	public String getFirstName() {
 		return firstName;
-	}
-
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(LocalDateTime createDate) {
-		this.createDate = createDate;
-	}
-
-	public LocalDateTime getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(LocalDateTime updateDate) {
-		this.updateDate = updateDate;
 	}
 
 	public void setFirstName(String firstName) {
@@ -89,5 +67,15 @@ public class Customer{
 
 	public void setAddress(Address address) {
 		this.address = address;
+		this.address.setCustomer(this);
 	}
+
+//	@Override
+//	public String toString() {
+//		return "Customer [customerid=" + customerid + ", firstName=" + firstName + ", lastName=" + lastName + ", name="
+//				+ name + ", address=" + address + "]";
+//	}
+//	
+	
+
 }

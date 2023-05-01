@@ -1,4 +1,5 @@
 create SEQUENCE IF NOT EXISTS customer_sequence_id INCREMENT 1 MAXVALUE 2147483647;
+
 create table customer (
     customerid bigint NOT NULL DEFAULT nextval('customer_sequence_id'),
     firstname varchar(50),
@@ -9,23 +10,24 @@ create table customer (
     PRIMARY KEY (customerid)
 );
 
-create SEQUENCE IF NOT EXISTS address_sequence_id INCREMENT 1 MAXVALUE 2147483647;
+-- Primary keys acts foreign key for address table
+-- A customer can have one address at a time.
 create table address (
-    addressid bigint NOT NULL DEFAULT nextval('address_sequence_id'),
+    customerid bigint NOT NULL,
     billing_address_st1 varchar(50),
     billing_address_st2 varchar(50),
     billing_address_zip varchar(50),
     delivery_address_st1 varchar(50),
     delivery_address_st2 varchar(50),
     delivery_address_zip varchar(50),
-    customerid bigint NOT NULL,
     createdate TIMESTAMP NOT NULL,
     updatedate TIMESTAMP,
-    PRIMARY KEY (addressid),
-    CONSTRAINT fk_customerid
+    PRIMARY KEY (customerid),
+    CONSTRAINT customerid
       FOREIGN KEY(customerid) 
 	  REFERENCES customer(customerid)
 );
+
 
 create SEQUENCE IF NOT EXISTS orderstatus_sequence_id INCREMENT 1 MAXVALUE 2147483647;
 create table orderstatus (

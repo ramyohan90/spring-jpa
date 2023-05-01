@@ -16,15 +16,15 @@ public class CreateCustomerImpl implements CreateCustomerService{
 	private CustomerDao customerDao;
 
 	@Override
-	public Customer createCustomer1(Customer c) {
-		// Utilize BaseEntity inheritance in future.
+	public Long createCustomer(Customer c) {
+		
 		c.setCreateDate(LocalDateTime.now());
 		c.getAddress().setCreateDate(LocalDateTime.now());
 		Customer result = this.customerDao.save(c);
 		if (result == null) {
 			return null;
 		}
-		return c;
+		return result.getCustomerid();
 	}
 
 }

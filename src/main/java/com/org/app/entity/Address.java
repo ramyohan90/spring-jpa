@@ -1,24 +1,24 @@
 package com.org.app.entity;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity(name = "address")
-public class Address{
+@Table(name = "address")
+public class Address extends BaseEntity{
 	@Id
-	@Column(name = "addressid")
-	@SequenceGenerator(name="address_sequence_id", sequenceName = "address_sequence_id", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_sequence_id")
-	private long addressid;
+	@Column(name = "customerid")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int customerid;
 	
+
 	@Column(name = "billing_address_st1")
 	private String billing_address_st1;
 	
@@ -36,38 +36,12 @@ public class Address{
 	
 	@Column(name = "delivery_address_zip")
 	private String delivery_address_zip;
-	
-	@Column(name = "createdate", nullable = false)
-	private LocalDateTime createDate;
-	
-	@Column(name = "updatedate")
-	private LocalDateTime updateDate;
 
-//	@OneToOne
-//	@JoinColumn(referencedColumnName= "customerid", table = "customer")
-//	private long customerid;
-	
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(LocalDateTime createDate) {
-		this.createDate = createDate;
-	}
-
-	public LocalDateTime getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(LocalDateTime updateDate) {
-		this.updateDate = updateDate;
-	}
-
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "address")
+	@OneToOne
+	@JoinColumn(name="customerid")
+	@MapsId
 	private Customer customer;
-	
-	
-
+		
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -76,8 +50,8 @@ public class Address{
 		this.customer = customer;
 	}
 
-	public long getAddressid() {
-		return addressid;
+	public long getCustomerId() {
+		return customerid;
 	}
 
 	public String getBilling_address_st1() {
@@ -127,6 +101,14 @@ public class Address{
 	public void setDelivery_address_zip(String delivery_address_zip) {
 		this.delivery_address_zip = delivery_address_zip;
 	}
+
+//	@Override
+//	public String toString() {
+//		return "Address [customerid=" + customerid + ", billing_address_st1=" + billing_address_st1
+//				+ ", billing_address_st2=" + billing_address_st2 + ", billing_address_zip=" + billing_address_zip
+//				+ ", delivery_address_st1=" + delivery_address_st1 + ", delivery_address_st2=" + delivery_address_st2
+//				+ ", delivery_address_zip=" + delivery_address_zip + ", customer=" + customer + "]";
+//	}
 	
 	
 }

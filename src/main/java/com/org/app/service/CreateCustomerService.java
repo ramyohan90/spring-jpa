@@ -4,5 +4,5 @@ import com.org.app.entity.Customer;
 
 public interface CreateCustomerService {
 	
-	Customer createCustomer1(Customer c);
+	Long createCustomer(Customer c);
 }

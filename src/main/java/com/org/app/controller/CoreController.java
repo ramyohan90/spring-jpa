@@ -1,7 +1,9 @@
 package com.org.app.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,11 +33,21 @@ public class CoreController {
 	}
 	
 	@RequestMapping(path = "/create/user/v1", method = RequestMethod.POST)
-	public ResponseEntity<Object> createCustomer2(@RequestBody(required = true) Customer c) {
+	public ResponseEntity<Object> createCustomer(@RequestBody(required = true) Customer c) {
 		c = ordersImpl.createCustomer(c);
 		Map<String, Customer> mp = new HashMap<>();
-//		System.out.println(c.toString());
 		mp.put("customer", c);
+		return ResponseHandler.prepareResponse(mp, "OK", HttpStatus.OK);
+	}
+	
+	@RequestMapping(path = "/customers", method = RequestMethod.GET)
+	public ResponseEntity<Object> getAllCustomers() {
+		Optional<List<Customer>> customers = ordersImpl.getCustomers();
+		Map<String, Object> mp = new HashMap<>();
+		if (customers.isEmpty()) {
+			return ResponseHandler.prepareResponse(mp, "OK", HttpStatus.NOT_FOUND);
+		}
+		mp.put("customers", customers.get());
 		return ResponseHandler.prepareResponse(mp, "OK", HttpStatus.OK);
 	}
 	

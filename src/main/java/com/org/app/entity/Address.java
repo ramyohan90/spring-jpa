@@ -1,5 +1,7 @@
 package com.org.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,6 +42,7 @@ public class Address extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name="customerid")
 	@MapsId
+	@JsonBackReference
 	private Customer customer;
 		
 	public Customer getCustomer() {
@@ -102,13 +105,13 @@ public class Address extends BaseEntity{
 		this.delivery_address_zip = delivery_address_zip;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Address [customerid=" + customerid + ", billing_address_st1=" + billing_address_st1
-//				+ ", billing_address_st2=" + billing_address_st2 + ", billing_address_zip=" + billing_address_zip
-//				+ ", delivery_address_st1=" + delivery_address_st1 + ", delivery_address_st2=" + delivery_address_st2
-//				+ ", delivery_address_zip=" + delivery_address_zip + ", customer=" + customer + "]";
-//	}
+	@Override
+	public String toString() {
+		return "Address [customerid=" + customerid + ", billing_address_st1=" + billing_address_st1
+				+ ", billing_address_st2=" + billing_address_st2 + ", billing_address_zip=" + billing_address_zip
+				+ ", delivery_address_st1=" + delivery_address_st1 + ", delivery_address_st2=" + delivery_address_st2
+				+ ", delivery_address_zip=" + delivery_address_zip + ", customer=" + customer + "]";
+	}
 	
 	
 }

@@ -1,5 +1,7 @@
 package com.org.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +33,7 @@ public class Customer extends BaseEntity{
 	
 	@OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
+	@JsonManagedReference
 	private Address address;
 	
 	public long getCustomerid() {
@@ -70,12 +73,12 @@ public class Customer extends BaseEntity{
 		this.address.setCustomer(this);
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Customer [customerid=" + customerid + ", firstName=" + firstName + ", lastName=" + lastName + ", name="
-//				+ name + ", address=" + address + "]";
-//	}
-//	
+	@Override
+	public String toString() {
+		return "Customer [customerid=" + customerid + ", firstName=" + firstName + ", lastName=" + lastName + ", name="
+				+ name + ", address=" + address + "]";
+	}
+	
 	
 
 }

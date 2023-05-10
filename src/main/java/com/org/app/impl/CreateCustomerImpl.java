@@ -16,15 +16,13 @@ public class CreateCustomerImpl implements CreateCustomerService{
 	private CustomerDao customerDao;
 
 	@Override
-	public Long createCustomer(Customer c) {
+	public Customer createCustomer(Customer c) {
 		
 		c.setCreateDate(LocalDateTime.now());
-		c.getAddress().setCreateDate(LocalDateTime.now());
-		Customer result = this.customerDao.save(c);
-		if (result == null) {
-			return null;
+		if (c.getAddress() != null) {
+			c.getAddress().setCreateDate(LocalDateTime.now());	
 		}
-		return result.getCustomerid();
+		return this.customerDao.save(c);
 	}
 
 }

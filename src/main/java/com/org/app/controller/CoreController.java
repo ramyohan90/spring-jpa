@@ -32,9 +32,10 @@ public class CoreController {
 	
 	@RequestMapping(path = "/create/user/v1", method = RequestMethod.POST)
 	public ResponseEntity<Object> createCustomer2(@RequestBody(required = true) Customer c) {
-		Long id = ordersImpl.createCustomer(c);
-		Map<String, Long> mp = new HashMap<>();
-		mp.put("customerId", id);
+		c = ordersImpl.createCustomer(c);
+		Map<String, Customer> mp = new HashMap<>();
+//		System.out.println(c.toString());
+		mp.put("customer", c);
 		return ResponseHandler.prepareResponse(mp, "OK", HttpStatus.OK);
 	}
 	
